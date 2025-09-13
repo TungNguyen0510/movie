@@ -15,7 +15,6 @@ export default function MovieList({
     limit: 24,
     sort_field: "modified.time",
     sort_type: "desc",
-    year: new Date().getFullYear(),
   },
 }: {
   slug: string;
@@ -35,10 +34,12 @@ export default function MovieList({
         <div className="flex flex-col gap-4">
           {label && (
             <Link
-              href={`/list/${slug}`}
-              className="flex items-center justify-start hover:text-green-500 cursor-pointer hover:underline w-fit"
+              href={`/danh-sach/${slug}`}
+              className="flex items-center justify-start hover:underline w-fit"
             >
-              <Label className="text-2xl font-bold">{label}</Label>
+              <Label className="text-2xl font-semibold cursor-pointer">
+                {label}
+              </Label>
               <ChevronRight className="size-6 mt-2" />
             </Link>
           )}

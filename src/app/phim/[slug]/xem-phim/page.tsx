@@ -27,14 +27,18 @@ export default function MovieWatchPage() {
     setSelectedEpisodeIndex(0);
   }, [slug, filmInfo?.data.item.episodes]);
 
+  const filmInfoItem = useMemo(() => {
+    return filmInfo?.data.item;
+  }, [filmInfo?.data.item]);
+
   const currentEmbedUrl = useMemo(() => {
-    const servers = filmInfo?.data.item.episodes;
+    const servers = filmInfoItem?.episodes;
     if (!servers || servers.length === 0) return "";
     const server = servers[selectedServerIndex];
     const serverEpisodes = server?.server_data ?? [];
     const current = serverEpisodes[selectedEpisodeIndex];
     return current?.link_embed ?? "";
-  }, [filmInfo?.data.item.episodes, selectedServerIndex, selectedEpisodeIndex]);
+  }, [filmInfoItem?.episodes, selectedServerIndex, selectedEpisodeIndex]);
 
   return (
     <div className="flex flex-col gap-4 w-full px-8 pb-6">
@@ -51,8 +55,8 @@ export default function MovieWatchPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href={`/movie/${filmInfo?.data.item.slug}`}>
-                  {filmInfo?.data.item.name}
+                <BreadcrumbLink href={`/phim/${filmInfoItem?.slug}`}>
+                  {filmInfoItem?.name}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -66,7 +70,7 @@ export default function MovieWatchPage() {
             <MovieEmbed url={currentEmbedUrl} />
           </div>
           <div className="flex gap-2 px-4 flex-wrap">
-            {filmInfo?.data.item.episodes?.map((server, serverIdx) => {
+            {filmInfoItem?.episodes?.map((server, serverIdx) => {
               const isActive = serverIdx === selectedServerIndex;
               return (
                 <Button
@@ -87,30 +91,35 @@ export default function MovieWatchPage() {
               );
             })}
           </div>
+
+          {(filmInfoItem?.episodes?.[selectedServerIndex]?.server_data
+            ?.length ?? 2) > 1 && (
+            <Label className="px-4">Danh sách tập:</Label>
+          )}
           <div className="flex gap-2 px-4 flex-wrap">
-            {(filmInfo?.data.item.episodes?.[selectedServerIndex]?.server_data
+            {(filmInfoItem?.episodes?.[selectedServerIndex]?.server_data
               ?.length ?? 2) > 1 &&
-              filmInfo?.data.item.episodes?.[
-                selectedServerIndex
-              ]?.server_data?.map((ep, epIdx) => {
-                const isActive = epIdx === selectedEpisodeIndex;
-                return (
-                  <Button
-                    variant="outline"
-                    key={`${ep.slug}-${epIdx}`}
-                    onClick={() => setSelectedEpisodeIndex(epIdx)}
-                    className={
-                      "transition-all cursor-pointer px-3 " +
-                      (isActive
-                        ? "bg-blue-500 dark:bg-blue-500 text-white dark:text-white hover:scale-105"
-                        : "hover:scale-105")
-                    }
-                    size="sm"
-                  >
-                    {ep.name}
-                  </Button>
-                );
-              })}
+              filmInfoItem?.episodes?.[selectedServerIndex]?.server_data?.map(
+                (ep, epIdx) => {
+                  const isActive = epIdx === selectedEpisodeIndex;
+                  return (
+                    <Button
+                      variant="outline"
+                      key={`${ep.slug}-${epIdx}`}
+                      onClick={() => setSelectedEpisodeIndex(epIdx)}
+                      className={
+                        "transition-all cursor-pointer px-3 " +
+                        (isActive
+                          ? "bg-blue-500 dark:bg-blue-500 text-white dark:text-white hover:scale-105"
+                          : "hover:scale-105")
+                      }
+                      size="sm"
+                    >
+                      {ep.name}
+                    </Button>
+                  );
+                }
+              )}
           </div>
         </>
       )}

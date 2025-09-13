@@ -12,7 +12,7 @@ export default function MovieCard(movie: Movie) {
     <div
       className="group cursor-pointer transition-transform hover:scale-x-105"
       onClick={() => {
-        router.push(`/movie/${movie.slug}`);
+        router.push(`/phim/${movie.slug}`);
       }}
     >
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md">
@@ -29,7 +29,7 @@ export default function MovieCard(movie: Movie) {
           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 12vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <div className="absolute bottom-2 left-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute bottom-2 left-2 right-2 text-white opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
           <Label className="text-base font-medium line-clamp-2">
             {movie.name}
           </Label>

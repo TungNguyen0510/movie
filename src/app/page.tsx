@@ -10,6 +10,7 @@ export default function Home() {
       <MovieList slug="phim-le" label="Phim Lẻ" />
       <MovieList slug="phim-bo" label="Phim Bộ" />
       <MovieList slug="hoat-hinh" label="Phim Hoạt Hình" />
+      <MovieList slug="tv-shows" label="TV Shows" />
     </div>
   );
 }

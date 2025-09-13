@@ -105,7 +105,7 @@ export const LIST_CATEGORY_MOVIE: (Category & { color: string })[] = [
     _id: "620a22ace0fc277084dfd531",
     name: "Kinh Dị",
     slug: "kinh-di",
-color: "#000000",
+    color: "#000000",
   },
   {
     _id: "620a22bae0fc277084dfd585",
@@ -161,4 +161,11 @@ color: "#000000",
     slug: "phim-18",
     color: "#C71585",
   },
+];
+
+export const EPISODE_COLOR_PREFIX = [
+  { prefix: "Tập", color: "#c084fc" },
+  { prefix: "Hoàn tất", color: "#34d399" },
+  { prefix: "Full", color: "#34d399" },
+  { prefix: "Trailer", color: "#fdba74" },
 ];

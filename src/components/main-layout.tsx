@@ -1,5 +1,6 @@
 import Header from "./header";
 import Footer from "./footer";
+import BackToTopButton from "./back-to-top-btn";
 
 export default function MainLayout({
   children,
@@ -11,6 +12,7 @@ export default function MainLayout({
       <Header />
       <main className="flex-1 w-full mt-16">{children}</main>
       <Footer />
+      <BackToTopButton />
     </div>
   );
 }

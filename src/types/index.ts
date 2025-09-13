@@ -7,7 +7,7 @@ export interface Category {
 export type Nation = Category;
 
 export interface ReleaseYear {
-    year: number;
+  year: number;
 }
 
 export interface APIResponse<T> {
@@ -53,8 +53,11 @@ export interface Pagination {
   pageRanges: number;
 }
 
+export type MOVIE_STATUS = "trailer" | "ongoing" | "completed";
+
 export interface Movie {
   _id: string;
+  status: MOVIE_STATUS;
   name: string;
   origin_name: string;
   type: string;
@@ -64,6 +67,7 @@ export interface Movie {
   chieurap: boolean;
   time: string;
   episode_current: string;
+  trailer_url: string;
   quality: string;
   lang: string;
   slug: string;
@@ -90,7 +94,6 @@ export interface MovieListParams {
   country?: string[];
   year?: number;
 }
-
 
 export interface MovieListData {
   seoOnPage: {
@@ -160,14 +163,13 @@ export interface MovieInfoData {
     slug: string;
   };
   item: Movie & {
-   actor: string[];
-   director: string[];
-   content: string;
-   episodes?: Episode[];
-    
+    actor: string[];
+    director: string[];
+    content: string;
+    episodes?: Episode[];
   };
   APP_DOMAIN_CDN_IMAGE: string;
-};
+}
 
 export interface MovieInfoResponse {
   status: string;
