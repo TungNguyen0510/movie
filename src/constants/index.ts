@@ -169,3 +169,10 @@ export const EPISODE_COLOR_PREFIX = [
   { prefix: "Full", color: "#34d399" },
   { prefix: "Trailer", color: "#fdba74" },
 ];
+
+export const PAGE_TITLE_SLUG = [
+  { slug: "the-loai", title: "Thể loại" },
+  { slug: "quoc-gia", title: "Quốc gia" },
+  { slug: "danh-sach", title: "Danh sách" },
+  { slug: "nam-phat-hanh", title: "Năm phát hành" },
+];

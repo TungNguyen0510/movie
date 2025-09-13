@@ -1,4 +1,8 @@
-import { EPISODE_COLOR_PREFIX, LIST_CATEGORY_MOVIE } from "@/constants";
+import {
+  EPISODE_COLOR_PREFIX,
+  LIST_CATEGORY_MOVIE,
+  PAGE_TITLE_SLUG,
+} from "@/constants";
 import { Episode } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -17,6 +21,13 @@ export function getEpisodeColor(episode_current: string): string | undefined {
 
   const rule = rules.find((r) => episode_current.startsWith(r.prefix));
   return rule?.color;
+}
+
+export function getTitlePageWithSlug(slug: string): string | undefined {
+  const rules: { slug: string; title: string }[] = PAGE_TITLE_SLUG;
+
+  const rule = rules.find((s) => s.slug === slug);
+  return rule?.title;
 }
 
 export function toYoutubeEmbedUrl(url: string): string {

@@ -49,7 +49,7 @@ export default function MovieInfoPage() {
     return movieInfo?.data.item;
   }, [movieInfo?.data.item]);
   return (
-    <div className="flex flex-col gap-8 w-full px-8 pb-6">
+    <div className="flex flex-col gap-8 w-full px-8 pb-6 mt-16">
       {isLoadingMovieInfo ? (
         <div className="text-zinc-600 dark:text-white flex justify-center items-center h-[calc(100vh-64px-100px-64px)]">
           <Loader2 className="size-8 animate-spin" />
@@ -85,8 +85,8 @@ export default function MovieInfoPage() {
                 unoptimized={false}
                 onLoad={() => setIsImageLoading(false)}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-2 left-2 right-2 flex gap-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-transparent to-transparent" />
+              <div className="absolute bottom-2 left-2 right-2 flex justify-center gap-2">
                 {movieInfoItem?.status != "trailer" &&
                   hasEmbedLink(movieInfoItem?.episodes || []) && (
                     <Button
@@ -204,7 +204,7 @@ export default function MovieInfoPage() {
                     align: "start",
                     loop: false,
                   }}
-                  className="w-full xl:max-w-[calc(100vw-400px-256px)] 2xl:max-w-[calc(100vw-400px)] h-40"
+                  className="w-full xl:max-w-[calc(100vw-400px-128px)] 2xl:max-w-[calc(100vw-400px)] h-40"
                 >
                   <CarouselContent className="-ml-0">
                     {isLoadingMovieActors ? (
@@ -216,7 +216,7 @@ export default function MovieInfoPage() {
                       movieActors?.data.peoples.map((actor) => (
                         <CarouselItem
                           key={actor.tmdb_people_id}
-                          className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 2xl:basis-1/5 pl-2 select-none"
+                          className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/5 2xl:basis-1/6 pl-2 select-none"
                         >
                           <Card className="p-2">
                             <CardContent className="flex flex-col gap-2 items-center">
@@ -225,10 +225,14 @@ export default function MovieInfoPage() {
                                   src={`${movieActors?.data.profile_sizes.original}${actor.profile_path}`}
                                   alt={actor.name}
                                 />
-                                <AvatarFallback>{actor.name}</AvatarFallback>
+                                <AvatarFallback className="flex items-center justify-center text-[0.5rem]">
+                                  {actor.name}
+                                </AvatarFallback>
                               </Avatar>
-                              <Label>{actor.name}</Label>
-                              <Label className="text-xs text-zinc-400">
+                              <Label className="text-nowrap">
+                                {actor.name}
+                              </Label>
+                              <Label className="text-xs text-zinc-400 text-nowrap">
                                 {actor.original_name}
                               </Label>
                               <Label className="text-[0.6rem] text-zinc-400">

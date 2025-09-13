@@ -41,7 +41,7 @@ export default function MovieWatchPage() {
   }, [movieInfoItem?.episodes, selectedServerIndex, selectedEpisodeIndex]);
 
   return (
-    <div className="flex flex-col gap-4 w-full px-8 pb-6">
+    <div className="flex flex-col gap-4 w-full px-8 pb-6 mt-16">
       {isLoadingMovieInfo ? (
         <div className="text-zinc-600 dark:text-white flex justify-center items-center h-[calc(100vh-64px-100px)]">
           <Loader2 className="size-8 animate-spin" />

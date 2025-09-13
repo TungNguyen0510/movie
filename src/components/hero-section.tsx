@@ -31,13 +31,13 @@ export default function HeroSection() {
 
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 5000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, [api]);
 
   return (
-    <div className="container mx-auto flex justify-center rounded-md overflow-hidden">
+    <div className="flex justify-center overflow-hidden">
       <Carousel
         opts={{
           align: "start",
@@ -48,13 +48,13 @@ export default function HeroSection() {
       >
         <CarouselContent className="-ml-0">
           {isLoading ? (
-            <div className="flex justify-center items-center w-full h-[calc(100vh-64px)]">
+            <div className="flex justify-center items-center w-full h-screen">
               <Loader2 className="size-8 animate-spin" />
             </div>
           ) : (
             movieList?.data.items.map((movie) => (
               <CarouselItem key={movie._id} className="w-full pl-0 select-none">
-                <div className="relative h-[calc(100vh-64px-128px)] w-full overflow-hidden">
+                <div className="relative h-screen w-full overflow-hidden">
                   <Image
                     src={`${movieList.data.APP_DOMAIN_CDN_IMAGE}/uploads/movies/${movie.poster_url}`}
                     alt={movie.name}
@@ -65,9 +65,15 @@ export default function HeroSection() {
                     sizes="100vw"
                     unoptimized={false}
                   />
-                  <div className="absolute top-1/3 left-20 right-4 text-white font-semibold flex flex-col gap-2">
-                    <Label className="text-xl/snug md:text-3xl/snug font-semibold line-clamp-3 mb-2">
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/100 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-bl from-black/100 via-transparent to-transparent" />
+
+                  <div className="absolute top-1/4 left-20 right-4 text-white font-semibold flex flex-col gap-2">
+                    <Label className="text-2xl/snug md:text-4xl/snug font-semibold line-clamp-3">
                       {movie.name}
+                    </Label>
+                    <Label className="text-base md:text-lg/snug font-light line-clamp-3 mb-2 text-amber-300">
+                      {movie.origin_name}
                     </Label>
                     <div className="flex flex-wrap items-center gap-2 text-xs md:text-base">
                       <Label>{movie.year}</Label>

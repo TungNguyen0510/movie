@@ -34,7 +34,7 @@ export default function MovieListSection({
         <div className="flex flex-col gap-4">
           {label && (
             <Link
-              href={`/danh-sach/${slug}`}
+              href={`/danh-sach/${slug}?page=1`}
               className="flex items-center justify-start hover:underline w-fit"
             >
               <Label className="text-2xl font-semibold cursor-pointer">

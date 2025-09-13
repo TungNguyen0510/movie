@@ -92,7 +92,7 @@ export interface MovieListParams {
   sort_type?: SORT_TYPE;
   category?: string[];
   country?: string[];
-  year?: number;
+  year?: number | number[];
 }
 
 export interface MovieListData {

@@ -195,10 +195,10 @@ export default function SearchMovieList({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <Label className="text-2xl font-semibold">
+        <Label className="text-base md:text-2xl font-semibold">
           Kết quả tìm kiếm cho &quot;{keyword}&quot;
         </Label>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-muted-foreground text-nowrap">
           Có tất cả {searchResults.data.params.pagination.totalItems} phim
         </span>
       </div>

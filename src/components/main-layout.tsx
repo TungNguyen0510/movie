@@ -10,7 +10,7 @@ export default function MainLayout({
   return (
     <div className="flex flex-col min-h-screen items-center w-full">
       <Header />
-      <main className="flex-1 w-full mt-16">{children}</main>
+      <main className="flex-1 w-full">{children}</main>
       <Footer />
       <BackToTopButton />
     </div>

@@ -3,7 +3,15 @@
 import { useSearchParams } from "next/navigation";
 import SearchMovieList from "@/components/search-movie-list";
 import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import { Home, Loader2 } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -22,7 +30,29 @@ function SearchContent() {
     );
   }
 
-  return <SearchMovieList keyword={keyword} />;
+  return (
+    <div className="flex flex-col gap-4 mt-16">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/" className="flex gap-1">
+              <Home className="size-4" />
+              Trang chủ
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tìm kiếm</BreadcrumbPage>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>từ khóa &quot;{keyword}&quot;</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <SearchMovieList keyword={keyword} />
+    </div>
+  );
 }
 
 export default function SearchPage() {

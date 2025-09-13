@@ -91,7 +91,11 @@ export async function fetchMovieList(
     searchParams.append("country", params.country.join(","));
   }
   if (params.year) {
-    searchParams.append("year", params.year.toString());
+    if (Array.isArray(params.year)) {
+      searchParams.append("year", params.year.join(","));
+    } else {
+      searchParams.append("year", params.year.toString());
+    }
   }
 
   const queryString = searchParams.toString();

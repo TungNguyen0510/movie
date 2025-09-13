@@ -23,14 +23,14 @@ export default function MovieCard(movie: Movie) {
           fill
           priority
           onLoad={() => setIsImageLoading(false)}
-          className={`object-cover transition-transform group-hover:scale-x-110 ${
+          className={`object-cover transition-transform group-hover:scale-110 ${
             isImageLoading ? "opacity-0" : "opacity-100"
           }`}
           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 12vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <div className="absolute bottom-2 left-2 right-2 text-white opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
-          <Label className="text-base font-medium line-clamp-2">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-transparent to-transparent" />
+        <div className="absolute bottom-2 left-2 right-2 text-white">
+          <Label className="text-base font-medium line-clamp-3">
             {movie.name}
           </Label>
         </div>
