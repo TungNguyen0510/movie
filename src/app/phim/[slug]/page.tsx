@@ -199,54 +199,56 @@ export default function MovieInfoPage() {
                   </Label>
                 </div>
 
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: false,
-                  }}
-                  className="w-full xl:max-w-[calc(100vw-400px-128px)] 2xl:max-w-[calc(100vw-400px)] h-40"
-                >
-                  <CarouselContent className="-ml-0">
-                    {isLoadingMovieActors ? (
-                      <div className="flex justify-center items-center w-full h-full">
-                        <Loader2 className="size-8 animate-spin" />
-                      </div>
-                    ) : (
-                      movieActors?.data.peoples &&
-                      movieActors?.data.peoples.map((actor) => (
-                        <CarouselItem
-                          key={actor.tmdb_people_id}
-                          className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/5 2xl:basis-1/6 pl-2 select-none"
-                        >
-                          <Card className="p-2">
-                            <CardContent className="flex flex-col gap-2 items-center">
-                              <Avatar className="size-16">
-                                <AvatarImage
-                                  src={`${movieActors?.data.profile_sizes.original}${actor.profile_path}`}
-                                  alt={actor.name}
-                                />
-                                <AvatarFallback className="flex items-center justify-center text-[0.5rem]">
-                                  {actor.name}
-                                </AvatarFallback>
-                              </Avatar>
-                              <Label className="text-nowrap">
-                                {actor.name}
-                              </Label>
-                              <Label className="text-xs text-zinc-400 text-nowrap">
-                                {actor.original_name}
-                              </Label>
-                              <Label className="text-[0.6rem] text-zinc-400">
-                                {actor.known_for_department}
-                              </Label>
-                            </CardContent>
-                          </Card>
-                        </CarouselItem>
-                      ))
-                    )}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+                {movieActors?.data.peoples &&
+                  movieActors?.data.peoples.length > 0 && (
+                    <Carousel
+                      opts={{
+                        align: "start",
+                        loop: false,
+                      }}
+                      className="w-full xl:max-w-[calc(100vw-400px-128px)] 2xl:max-w-[calc(100vw-400px)] h-40"
+                    >
+                      <CarouselContent className="-ml-0">
+                        {isLoadingMovieActors ? (
+                          <div className="flex justify-center items-center w-full h-full">
+                            <Loader2 className="size-8 animate-spin" />
+                          </div>
+                        ) : (
+                          movieActors?.data.peoples.map((actor) => (
+                            <CarouselItem
+                              key={actor.tmdb_people_id}
+                              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/5 2xl:basis-1/6 pl-2 select-none"
+                            >
+                              <Card className="p-2">
+                                <CardContent className="flex flex-col gap-2 items-center">
+                                  <Avatar className="size-16">
+                                    <AvatarImage
+                                      src={`${movieActors?.data.profile_sizes.original}${actor.profile_path}`}
+                                      alt={actor.name}
+                                    />
+                                    <AvatarFallback className="flex items-center justify-center text-[0.5rem]">
+                                      {actor.name}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <Label className="text-nowrap">
+                                    {actor.name}
+                                  </Label>
+                                  <Label className="text-xs text-zinc-400 text-nowrap">
+                                    {actor.original_name}
+                                  </Label>
+                                  <Label className="text-[0.6rem] text-zinc-400">
+                                    {actor.known_for_department}
+                                  </Label>
+                                </CardContent>
+                              </Card>
+                            </CarouselItem>
+                          ))
+                        )}
+                      </CarouselContent>
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
+                  )}
               </div>
             </div>
           </div>
@@ -281,7 +283,14 @@ export default function MovieInfoPage() {
             )}
             <div className="flex flex-col gap-4">
               <Label className="whitespace-nowrap text-2xl">
-                Hình ảnh <Label>({movieImages?.data.images.length})</Label>
+                Hình ảnh{" "}
+                <Label>
+                  (
+                  {movieImages?.data.images
+                    ? movieImages?.data.images.length
+                    : "0"}
+                  )
+                </Label>
               </Label>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 grid-flow-row-dense gap-4">
                 {isLoadingMovieImages ? (
