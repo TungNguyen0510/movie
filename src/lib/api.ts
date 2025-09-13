@@ -8,6 +8,9 @@ import {
   MovieListResponse,
   MovieListParams,
   MovieInfoResponse,
+  MovieImagesResponse,
+  MovieActorsResponse,
+  MovieKeywordsResponse,
 } from "@/types";
 
 type HttpErrorResponse = {
@@ -69,7 +72,8 @@ export async function fetchReleaseYears(): Promise<ReleaseYear[]> {
 }
 
 export async function fetchMovieList(
-  slug: string = "phim-moi",
+  slug1: string,
+  slug2: string = "phim-moi",
   params: MovieListParams = {}
 ): Promise<MovieListResponse> {
   const searchParams = new URLSearchParams();
@@ -91,7 +95,7 @@ export async function fetchMovieList(
   }
 
   const queryString = searchParams.toString();
-  const path = `danh-sach/${slug}${queryString ? `?${queryString}` : ""}`;
+  const path = `${slug1}/${slug2}${queryString ? `?${queryString}` : ""}`;
 
   return await apiGet<MovieListResponse>(path);
 }
@@ -113,7 +117,28 @@ export async function searchKeyword(
   return await apiGet<MovieListResponse>(path);
 }
 
-export async function fetchFilmInfo(slug: string): Promise<MovieInfoResponse> {
+export async function fetchMovieInfo(slug: string): Promise<MovieInfoResponse> {
   const path = `phim/${slug}`;
   return await apiGet<MovieInfoResponse>(path);
+}
+
+export async function fetchMovieImages(
+  slug: string
+): Promise<MovieImagesResponse> {
+  const path = `phim/${slug}/images`;
+  return await apiGet<MovieImagesResponse>(path);
+}
+
+export async function fetchMovieActors(
+  slug: string
+): Promise<MovieActorsResponse> {
+  const path = `phim/${slug}/peoples`;
+  return await apiGet<MovieActorsResponse>(path);
+}
+
+export async function fetchMovieKeywords(
+  slug: string
+): Promise<MovieKeywordsResponse> {
+  const path = `phim/${slug}/keywords`;
+  return await apiGet<MovieKeywordsResponse>(path);
 }

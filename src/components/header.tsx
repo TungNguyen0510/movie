@@ -75,9 +75,14 @@ export default function Header() {
                     {categories?.map((c) => (
                       <li key={c._id}>
                         <NavigationMenuLink asChild>
-                          <a href="#" className="text-sm">
+                          <Label
+                            className="text-sm cursor-pointer"
+                            onClick={() =>
+                              router.push(`/the-loai/${c.slug}?page=1`)
+                            }
+                          >
                             {c.name}
-                          </a>
+                          </Label>
                         </NavigationMenuLink>
                       </li>
                     ))}
@@ -104,9 +109,14 @@ export default function Header() {
                     {nations?.map((n) => (
                       <li key={n._id}>
                         <NavigationMenuLink asChild>
-                          <a href="#" className="text-sm">
+                          <Label
+                            className="text-sm cursor-pointer"
+                            onClick={() =>
+                              router.push(`/quoc-gia/${n.slug}?page=1`)
+                            }
+                          >
                             {n.name}
-                          </a>
+                          </Label>
                         </NavigationMenuLink>
                       </li>
                     ))}
@@ -119,12 +129,17 @@ export default function Header() {
               <NavigationMenuTrigger>Danh sách</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[300px] gap-2 md:w-[500px] md:grid-cols-3">
-                  {LIST_CATEGORY?.map((n) => (
-                    <li key={n._id}>
+                  {LIST_CATEGORY?.map((c) => (
+                    <li key={c._id}>
                       <NavigationMenuLink asChild>
-                        <a href="#" className="text-sm">
-                          {n.name}
-                        </a>
+                        <Label
+                          className="text-sm cursor-pointer"
+                          onClick={() =>
+                            router.push(`/danh-sach/${c.slug}?page=1`)
+                          }
+                        >
+                          {c.name}
+                        </Label>
                       </NavigationMenuLink>
                     </li>
                   ))}
@@ -147,12 +162,17 @@ export default function Header() {
                 )}
                 {!releaseYearsLoading && !releaseYearsError && (
                   <ul className="flex flex-col w-[128px] gap-2 overflow-y-auto max-h-96">
-                    {releaseYears?.map((n) => (
-                      <li key={n.year}>
+                    {releaseYears?.map((y) => (
+                      <li key={y.year}>
                         <NavigationMenuLink asChild>
-                          <a href="#" className="text-sm">
-                            {n.year}
-                          </a>
+                          <Label
+                            className="text-sm cursor-pointer"
+                            onClick={() =>
+                              router.push(`/nam-phat-hanh/${y.year}?page=1`)
+                            }
+                          >
+                            {y.year}
+                          </Label>
                         </NavigationMenuLink>
                       </li>
                     ))}

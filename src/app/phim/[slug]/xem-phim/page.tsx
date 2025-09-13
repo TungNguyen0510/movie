@@ -11,38 +11,38 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useFilmInfo } from "@/lib/queries/useFilmInfo";
-import { Loader2 } from "lucide-react";
+import { useMovieInfo } from "@/lib/queries/userMovieInfo";
+import { Home, Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 export default function MovieWatchPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: filmInfo, isLoading: isLoadingFilmInfo } = useFilmInfo(slug);
+  const { data: movieInfo, isLoading: isLoadingMovieInfo } = useMovieInfo(slug);
   const [selectedServerIndex, setSelectedServerIndex] = useState(0);
   const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState(0);
 
   useEffect(() => {
     setSelectedServerIndex(0);
     setSelectedEpisodeIndex(0);
-  }, [slug, filmInfo?.data.item.episodes]);
+  }, [slug, movieInfo?.data?.item.episodes]);
 
-  const filmInfoItem = useMemo(() => {
-    return filmInfo?.data.item;
-  }, [filmInfo?.data.item]);
+  const movieInfoItem = useMemo(() => {
+    return movieInfo?.data.item;
+  }, [movieInfo?.data.item]);
 
   const currentEmbedUrl = useMemo(() => {
-    const servers = filmInfoItem?.episodes;
+    const servers = movieInfoItem?.episodes;
     if (!servers || servers.length === 0) return "";
     const server = servers[selectedServerIndex];
     const serverEpisodes = server?.server_data ?? [];
     const current = serverEpisodes[selectedEpisodeIndex];
     return current?.link_embed ?? "";
-  }, [filmInfoItem?.episodes, selectedServerIndex, selectedEpisodeIndex]);
+  }, [movieInfoItem?.episodes, selectedServerIndex, selectedEpisodeIndex]);
 
   return (
     <div className="flex flex-col gap-4 w-full px-8 pb-6">
-      {isLoadingFilmInfo ? (
+      {isLoadingMovieInfo ? (
         <div className="text-zinc-600 dark:text-white flex justify-center items-center h-[calc(100vh-64px-100px)]">
           <Loader2 className="size-8 animate-spin" />
         </div>
@@ -51,12 +51,15 @@ export default function MovieWatchPage() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+                <BreadcrumbLink href="/" className="flex gap-1">
+                  <Home className="size-4" />
+                  Trang chủ
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href={`/phim/${filmInfoItem?.slug}`}>
-                  {filmInfoItem?.name}
+                <BreadcrumbLink href={`/phim/${movieInfoItem?.slug}`}>
+                  {movieInfoItem?.name}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -70,7 +73,7 @@ export default function MovieWatchPage() {
             <MovieEmbed url={currentEmbedUrl} />
           </div>
           <div className="flex gap-2 px-4 flex-wrap">
-            {filmInfoItem?.episodes?.map((server, serverIdx) => {
+            {movieInfoItem?.episodes?.map((server, serverIdx) => {
               const isActive = serverIdx === selectedServerIndex;
               return (
                 <Button
@@ -92,14 +95,14 @@ export default function MovieWatchPage() {
             })}
           </div>
 
-          {(filmInfoItem?.episodes?.[selectedServerIndex]?.server_data
+          {(movieInfoItem?.episodes?.[selectedServerIndex]?.server_data
             ?.length ?? 2) > 1 && (
             <Label className="px-4">Danh sách tập:</Label>
           )}
           <div className="flex gap-2 px-4 flex-wrap">
-            {(filmInfoItem?.episodes?.[selectedServerIndex]?.server_data
+            {(movieInfoItem?.episodes?.[selectedServerIndex]?.server_data
               ?.length ?? 2) > 1 &&
-              filmInfoItem?.episodes?.[selectedServerIndex]?.server_data?.map(
+              movieInfoItem?.episodes?.[selectedServerIndex]?.server_data?.map(
                 (ep, epIdx) => {
                   const isActive = epIdx === selectedEpisodeIndex;
                   return (

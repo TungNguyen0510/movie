@@ -2,8 +2,8 @@
 
 import MovieCard from "@/components/movie-card";
 import { useMovieList } from "@/lib/queries/useMovieList";
-import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState, useEffect } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -21,18 +21,44 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
+import { SORT_FIELD, SORT_TYPE } from "@/types";
+import { Home } from "lucide-react";
 
 export default function ListMoviePage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug1, slug2 } = useParams<{ slug1: string; slug2: string }>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [page, setPage] = useState<number>(1);
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    } else {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
-  const { data: movieList } = useMovieList(slug, {
-    page,
-    limit: 24,
-    sort_field: "modified.time",
-    sort_type: "desc",
+  const limit = searchParams.get("limit")
+    ? parseInt(searchParams.get("limit")!, 10)
+    : 24;
+  const sortField =
+    (searchParams.get("sort_field") as SORT_FIELD) || "modified.time";
+  const sortType = (searchParams.get("sort_type") as SORT_TYPE) || "desc";
+
+  const { data: movieList } = useMovieList(slug1, slug2, {
+    page: currentPage,
+    limit,
+    sort_field: sortField,
+    sort_type: sortType,
   });
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set("page", page.toString());
+    router.push(`/${slug1}/${slug2}?${newSearchParams.toString()}`);
+  };
 
   const pagination = movieList?.data.params.pagination;
 
@@ -58,17 +84,34 @@ export default function ListMoviePage() {
 
   return (
     <div className="flex flex-col gap-4 w-full px-8 pb-6">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>{movieList?.data.titlePage}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="flex justify-between">
+        {movieList?.data.titlePage && currentPage && (
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="flex gap-1">
+                  <Home className="size-4" />
+                  Trang chủ
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{movieList?.data.titlePage}</BreadcrumbPage>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Trang {currentPage}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        )}
+
+        {pagination?.totalItems && (
+          <span className="text-sm text-muted-foreground">
+            Có tất cả {pagination?.totalItems} phim
+          </span>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
         {movieList?.data.items.map((movie) => (
@@ -83,8 +126,13 @@ export default function ListMoviePage() {
               <PaginationPrevious
                 onClick={(e) => {
                   e.preventDefault();
-                  if (page > 1) setPage(page - 1);
+                  if (currentPage > 1) handlePageChange(currentPage - 1);
                 }}
+                className={
+                  currentPage <= 1
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
               />
             </PaginationItem>
 
@@ -109,8 +157,9 @@ export default function ListMoviePage() {
                       isActive={p === pagination.currentPage}
                       onClick={(e) => {
                         e.preventDefault();
-                        setPage(p);
+                        handlePageChange(p);
                       }}
+                      className="cursor-pointer"
                     >
                       {p}
                     </PaginationLink>
@@ -133,13 +182,21 @@ export default function ListMoviePage() {
                 onClick={(e) => {
                   e.preventDefault();
                   if (
-                    page <
+                    currentPage <
                     Math.ceil(
                       pagination.totalItems / pagination.totalItemsPerPage
                     )
                   )
-                    setPage(page + 1);
+                    handlePageChange(currentPage + 1);
                 }}
+                className={
+                  currentPage >=
+                  Math.ceil(
+                    pagination.totalItems / pagination.totalItemsPerPage
+                  )
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
               />
             </PaginationItem>
           </PaginationContent>

@@ -51,7 +51,6 @@ export default function SearchMovieList({
     ...params,
   });
 
-  // Handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -59,7 +58,6 @@ export default function SearchMovieList({
     router.push(`/tim-kiem?${newSearchParams.toString()}`);
   };
 
-  // Generate pagination items
   const generatePaginationItems = () => {
     if (!searchResults?.data?.params?.pagination) return [];
 
@@ -70,7 +68,6 @@ export default function SearchMovieList({
     );
     const items = [];
 
-    // Previous button
     items.push(
       <PaginationItem key="prev">
         <PaginationPrevious
@@ -82,7 +79,6 @@ export default function SearchMovieList({
       </PaginationItem>
     );
 
-    // Page numbers
     const startPage = Math.max(1, page - 2);
     const endPage = Math.min(totalPages, page + 2);
 
@@ -142,7 +138,6 @@ export default function SearchMovieList({
       );
     }
 
-    // Next button
     items.push(
       <PaginationItem key="next">
         <PaginationNext
@@ -204,7 +199,7 @@ export default function SearchMovieList({
           Kết quả tìm kiếm cho &quot;{keyword}&quot;
         </Label>
         <span className="text-sm text-muted-foreground">
-          {searchResults.data.params.pagination.totalItems} phim
+          Có tất cả {searchResults.data.params.pagination.totalItems} phim
         </span>
       </div>
 

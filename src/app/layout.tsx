@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   title: "TN Movie",
   description: "TN Movie",
   manifest: "/manifest.json",
-  themeColor: "#000000",
 };
 
 export default function RootLayout({

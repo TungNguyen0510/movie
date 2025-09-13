@@ -1,4 +1,5 @@
 import { EPISODE_COLOR_PREFIX, LIST_CATEGORY_MOVIE } from "@/constants";
+import { Episode } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,4 +21,10 @@ export function getEpisodeColor(episode_current: string): string | undefined {
 
 export function toYoutubeEmbedUrl(url: string): string {
   return url.replace("watch?v=", "embed/");
+}
+
+export function hasEmbedLink(episodes: Episode[]): boolean {
+  return episodes.some((ep) =>
+    ep.server_data.some((data) => data.link_embed.trim() !== "")
+  );
 }

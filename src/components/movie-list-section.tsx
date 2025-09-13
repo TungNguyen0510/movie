@@ -7,7 +7,7 @@ import { ChevronRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { MovieListParams } from "@/types";
 
-export default function MovieList({
+export default function MovieListSection({
   slug,
   label,
   params = {
@@ -21,7 +21,7 @@ export default function MovieList({
   label?: string;
   params?: MovieListParams;
 }) {
-  const { data: movieList, isLoading } = useMovieList(slug, {
+  const { data: movieList, isLoading } = useMovieList("danh-sach", slug, {
     ...params,
   });
   return (

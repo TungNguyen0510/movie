@@ -19,7 +19,7 @@ import Link from "next/link";
 
 export default function HeroSection() {
   const [api, setApi] = useState<CarouselApi>();
-  const { data: movieList, isLoading } = useMovieList("phim-moi", {
+  const { data: movieList, isLoading } = useMovieList("danh-sach", "phim-moi", {
     page: 1,
     limit: 24,
     sort_field: "modified.time",

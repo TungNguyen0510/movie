@@ -13,14 +13,14 @@ export interface ReleaseYear {
 export interface APIResponse<T> {
   status?: string;
   message?: string;
-  data?: { items: T[] };
+  data: T;
 }
 
-export type CategoryResponse = APIResponse<Category>;
+export type CategoryResponse = APIResponse<{ items: Category[] }>;
 
-export type NationResponse = APIResponse<Nation>;
+export type NationResponse = APIResponse<{ items: Nation[] }>;
 
-export type ReleaseYearResponse = APIResponse<ReleaseYear>;
+export type ReleaseYearResponse = APIResponse<{ items: ReleaseYear[] }>;
 
 export type SORT_FIELD = "modified.time" | "year" | "_id";
 
@@ -171,8 +171,74 @@ export interface MovieInfoData {
   APP_DOMAIN_CDN_IMAGE: string;
 }
 
-export interface MovieInfoResponse {
-  status: string;
-  message: string;
-  data: MovieInfoData;
+export interface MovieImages {
+  image_sizes: {
+    backdrop: {
+      original: string;
+      w1280: string;
+      w300: string;
+      w780: string;
+    };
+
+    poster: {
+      original: string;
+      w154: string;
+      w185: string;
+      w342: string;
+      w500: string;
+      w780: string;
+      w92: string;
+    };
+  };
+
+  images: {
+    width: number;
+    height: number;
+    aspect_ratio: number;
+    type: string;
+    file_path: string;
+  }[];
 }
+
+export type Actor = {
+  tmdb_people_id: number;
+  adult: boolean;
+  gender: number;
+  gender_name: string;
+  name: string;
+  original_name: string;
+  character: string;
+  known_for_department: string;
+  profile_path: string;
+  also_known_as: string[];
+};
+
+export interface MovieActors {
+  profile_sizes: {
+    original: string;
+    h632: string;
+    w185: string;
+    w45: string;
+  };
+
+  peoples: Actor[];
+}
+
+export type Keyword = {
+  tmdb_keyword_id: number;
+  name: string;
+  name_vn: string;
+};
+
+export interface MovieKeywords {
+  tmdb_id: number;
+  keywords: Keyword[];
+}
+
+export type MovieInfoResponse = APIResponse<MovieInfoData>;
+
+export type MovieImagesResponse = APIResponse<MovieImages>;
+
+export type MovieActorsResponse = APIResponse<MovieActors>;
+
+export type MovieKeywordsResponse = APIResponse<MovieKeywords>;

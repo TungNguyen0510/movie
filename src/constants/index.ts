@@ -165,7 +165,7 @@ export const LIST_CATEGORY_MOVIE: (Category & { color: string })[] = [
 
 export const EPISODE_COLOR_PREFIX = [
   { prefix: "Tập", color: "#c084fc" },
-  { prefix: "Hoàn tất", color: "#34d399" },
+  { prefix: "Hoàn", color: "#34d399" },
   { prefix: "Full", color: "#34d399" },
   { prefix: "Trailer", color: "#fdba74" },
 ];

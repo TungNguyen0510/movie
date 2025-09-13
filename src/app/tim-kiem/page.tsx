@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import SearchMovieList from "@/components/search-movie-list";
 import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -30,7 +31,7 @@ export default function SearchPage() {
       <Suspense
         fallback={
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <Loader2 className="size-8 animate-spin" />
           </div>
         }
       >
