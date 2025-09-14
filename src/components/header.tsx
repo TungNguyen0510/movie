@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useScrolledFromTop } from "@/hooks/use-scrolled-from-top";
 import HeaderNavigationMenu from "./header-navigation-menu";
+import HeaderNavigationDialog from "./header-navigation-dialog";
 
 export default function Header() {
   const router = useRouter();
@@ -27,8 +28,8 @@ export default function Header() {
         isScrolled ? "bg-background/50 backdrop-blur-sm" : ""
       }`}
     >
-      <div className="flex items-center gap-2 md:gap-12">
-        <Label className="text-2xl font-semibold">
+      <div className="flex items-center gap-2 xl:gap-12">
+        <Label className="text-base md:text-2xl font-semibold text-nowrap">
           <Link href="/">TN Movie</Link>
         </Label>
 
@@ -40,11 +41,13 @@ export default function Header() {
           <Input
             type="text"
             placeholder="Tìm kiếm"
-            className="w-48 md:w-64"
+            className="w-fit max-w-48 xl:max-w-64"
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
         </form>
+
+        <HeaderNavigationDialog />
       </div>
     </header>
   );

@@ -6,14 +6,6 @@ import { useNation } from "@/lib/queries/useNation";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -44,6 +36,14 @@ import {
 } from "@/components/ui/select";
 import { useCategory } from "@/lib/queries/useCategory";
 import { getTitlePageWithSlug } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function ListMoviePage() {
   const { slug1, slug2 } = useParams<{ slug1: string; slug2: string }>();
@@ -63,7 +63,7 @@ export default function ListMoviePage() {
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [hasAppliedFilters, setHasAppliedFilters] = useState(false);
 
   const { data: nations } = useNation();
@@ -116,18 +116,18 @@ export default function ListMoviePage() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (!isDrawerOpen && !hasAppliedFilters) {
+    if (!isDialogOpen && !hasAppliedFilters) {
       setUiSortField(sortField);
       setUiSortType(sortType);
       setUiSelectedCategory(selectedCategory);
       setUiSelectedCountries(selectedCountries);
       setUiSelectedYears(selectedYears);
     }
-    if (isDrawerOpen) {
+    if (isDialogOpen) {
       setHasAppliedFilters(false);
     }
   }, [
-    isDrawerOpen,
+    isDialogOpen,
     hasAppliedFilters,
     sortField,
     sortType,
@@ -210,7 +210,7 @@ export default function ListMoviePage() {
     }
 
     setHasAppliedFilters(true);
-    setIsDrawerOpen(false);
+    setIsDialogOpen(false);
 
     router.push(`/${slug1}/${slug2}?${newSearchParams.toString()}`);
   };
@@ -295,25 +295,21 @@ export default function ListMoviePage() {
               </Breadcrumb>
             )}
             <div className="flex gap-4 items-center">
-              <Drawer
-                direction="top"
-                open={isDrawerOpen}
-                onOpenChange={setIsDrawerOpen}
-              >
-                <DrawerTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent h-10 px-4 py-2 cursor-pointer text-blue-500 hover:text-blue-300 dark:border-blue-500">
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent h-10 px-4 py-2 cursor-pointer text-blue-500 hover:text-blue-300 dark:border-blue-500">
                   <Funnel className="size-5 mr-2" />
                   Lọc
-                </DrawerTrigger>
-                <DrawerContent className="h-fit overflow-y-auto">
-                  <DrawerHeader>
-                    <DrawerTitle className="flex justify-start">
+                </DialogTrigger>
+                <DialogContent className="max-h-screen overflow-y-auto max-w-screen rounded-none">
+                  <DialogHeader>
+                    <DialogTitle className="flex justify-start">
                       Lọc phim {movieList?.data.titlePage}
-                    </DrawerTitle>
-                  </DrawerHeader>
+                    </DialogTitle>
+                  </DialogHeader>
 
                   <div className="px-4 pb-4 space-y-6">
                     <div className="space-y-4">
-                      <div className="flex flex-col md:flex-row md:items-center gap-4">
+                      <div className="flex flex-col md:flex-row md:items-center gap-2">
                         <Label className="text-base font-semibold text-nowrap">
                           Sắp xếp theo
                         </Label>
@@ -407,7 +403,7 @@ export default function ListMoviePage() {
                         <Label className="text-base font-semibold">
                           Quốc gia
                         </Label>
-                        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+                        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 xl:grid-cols-8 gap-2">
                           {nations?.map((nation) => (
                             <Button
                               key={nation._id}
@@ -461,7 +457,7 @@ export default function ListMoviePage() {
                     )}
                   </div>
 
-                  <DrawerFooter className="flex flex-row gap-4 justify-end">
+                  <DialogFooter className="flex flex-row gap-4 justify-end">
                     <Button
                       variant="destructive"
                       onClick={handleClearFilters}
@@ -477,14 +473,14 @@ export default function ListMoviePage() {
                     </Button>
                     <Button
                       variant="outline"
-                      onClick={() => setIsDrawerOpen(false)}
+                      onClick={() => setIsDialogOpen(false)}
                       className="cursor-pointer"
                     >
                       Đóng
                     </Button>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
 
               {pagination && pagination?.totalItems > 0 && (
                 <span className="text-sm text-muted-foreground">
@@ -511,7 +507,7 @@ export default function ListMoviePage() {
               </p>
               <Button
                 variant="outline"
-                onClick={() => setIsDrawerOpen(true)}
+                onClick={() => setIsDialogOpen(true)}
                 className="text-blue-500 hover:text-blue-300 dark:border-blue-500"
               >
                 <Funnel className="size-5 mr-2" />

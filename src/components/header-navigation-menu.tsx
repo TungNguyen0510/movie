@@ -38,7 +38,7 @@ export default function HeaderNavigationMenu() {
   } = useReleaseYear();
 
   return (
-    <NavigationMenu viewport={false} className="hidden md:block">
+    <NavigationMenu viewport={false} className="hidden lg:block">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent">
