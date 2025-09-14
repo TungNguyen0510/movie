@@ -217,7 +217,7 @@ export default function MovieInfoPage() {
                           movieActors?.data.peoples.map((actor) => (
                             <CarouselItem
                               key={actor.tmdb_people_id}
-                              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/5 2xl:basis-1/6 pl-2 select-none"
+                              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/5 2xl:basis-1/6 pl-2 select-none min-w-40"
                             >
                               <Card className="p-2">
                                 <CardContent className="flex flex-col gap-2 items-center">

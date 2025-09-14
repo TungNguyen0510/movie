@@ -28,6 +28,7 @@ type CarouselContextProps = {
   scrollNext: () => void;
   canScrollPrev: boolean;
   canScrollNext: boolean;
+  showNavigation: boolean;
 } & CarouselProps;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
@@ -60,11 +61,15 @@ function Carousel({
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
+  const [showNavigation, setShowNavigation] = React.useState(true);
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return;
-    setCanScrollPrev(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
+    const canPrev = api.canScrollPrev();
+    const canNext = api.canScrollNext();
+    setCanScrollPrev(canPrev);
+    setCanScrollNext(canNext);
+    setShowNavigation(canPrev || canNext);
   }, []);
 
   const scrollPrev = React.useCallback(() => {
@@ -116,6 +121,7 @@ function Carousel({
         scrollNext,
         canScrollPrev,
         canScrollNext,
+        showNavigation,
       }}
     >
       <div
@@ -177,7 +183,10 @@ function CarouselPrevious({
   size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+  const { orientation, scrollPrev, canScrollPrev, showNavigation } =
+    useCarousel();
+
+  if (!showNavigation) return null;
 
   return (
     <Button
@@ -207,7 +216,10 @@ function CarouselNext({
   size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel();
+  const { orientation, scrollNext, canScrollNext, showNavigation } =
+    useCarousel();
+
+  if (!showNavigation) return null;
 
   return (
     <Button
