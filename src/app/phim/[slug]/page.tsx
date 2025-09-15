@@ -188,17 +188,6 @@ export default function MovieInfoPage() {
                   )}
                 </div>
 
-                <div className="flex gap-2">
-                  <Label className="whitespace-nowrap text-zinc-400">
-                    Đạo diễn:
-                  </Label>
-                  <Label className="text-zinc-600 dark:text-white">
-                    {movieInfoItem?.director
-                      .map((director) => director)
-                      .join(", ") || "Không rõ"}
-                  </Label>
-                </div>
-
                 {movieActors?.data.peoples &&
                   movieActors?.data.peoples.length > 0 && (
                     <Carousel
@@ -237,7 +226,7 @@ export default function MovieInfoPage() {
                                     {actor.original_name}
                                   </Label>
                                   <Label className="text-[0.6rem] text-zinc-400">
-                                    {actor.known_for_department}
+                                    {actor.character || actor.original_name}
                                   </Label>
                                 </CardContent>
                               </Card>
@@ -259,7 +248,7 @@ export default function MovieInfoPage() {
                 Nội dung phim
               </Label>
               <Label
-                className="tracking-wider leading-snug text-justify text-zinc-300"
+                className="tracking-wider leading-snug text-justify text-zinc-300 flex flex-col gap-2 items-start"
                 dangerouslySetInnerHTML={{
                   __html: movieInfoItem?.content ?? "",
                 }}
