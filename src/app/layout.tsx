@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import QueryProvider from "@/components/provider/query-provider";
+import { MoviePopupProvider } from "@/components/provider/movie-popup-provider";
 import MainLayout from "@/components/main-layout";
 
 const geistSans = Geist({
@@ -38,7 +39,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <MainLayout>{children}</MainLayout>
+            <MoviePopupProvider>
+              <MainLayout>{children}</MainLayout>
+            </MoviePopupProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

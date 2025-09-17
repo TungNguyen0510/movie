@@ -81,7 +81,7 @@ export default function MovieInfoPage() {
                 priority
                 quality={100}
                 className="object-cover"
-                sizes="100vw"
+                sizes="100vw max-h-[400px]"
                 unoptimized={false}
                 onLoad={() => setIsImageLoading(false)}
               />
@@ -109,6 +109,7 @@ export default function MovieInfoPage() {
                       </Button>
                     </DialogTrigger>
                     <DialogContent
+                      aria-describedby={undefined}
                       className="p-4 md:w-[80vw] xl:w-[60vw] md:h-[50vh] xl:h-[70vh]"
                       showCloseButton={true}
                     >
@@ -276,31 +277,42 @@ export default function MovieInfoPage() {
                 <Label>
                   (
                   {movieImages?.data.images
-                    ? movieImages?.data.images.length
+                    ? movieImages?.data.images.filter(
+                        (img, index, self) =>
+                          index ===
+                          self.findIndex((t) => t.file_path === img.file_path)
+                      ).length
                     : "0"}
                   )
                 </Label>
               </Label>
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 grid-flow-row-dense gap-4">
+              <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
                 {isLoadingMovieImages ? (
                   <div className="flex justify-center items-center w-full h-full">
                     <Loader2 className="size-8 animate-spin" />
                   </div>
                 ) : (
                   movieImages?.data.images &&
-                  movieImages?.data.images.map((image) => (
-                    <Image
-                      key={image.file_path}
-                      src={`${movieImages?.data.image_sizes.backdrop.w1280}/${image.file_path}`}
-                      alt={image.file_path || ""}
-                      width={780}
-                      height={500}
-                      priority
-                      quality={100}
-                      className="object-cover max-h-[500px]"
-                      unoptimized={false}
-                    />
-                  ))
+                  movieImages?.data.images
+                    .filter(
+                      (img, index, self) =>
+                        index ===
+                        self.findIndex((t) => t.file_path === img.file_path)
+                    )
+                    .map((image) => (
+                      <Image
+                        key={image.file_path}
+                        src={`${movieImages?.data.image_sizes.backdrop.w1280}${image.file_path}`}
+                        alt={image.file_path || ""}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        priority
+                        quality={100}
+                        className="object-cover h-auto w-full mb-4 break-inside-avoid shadow"
+                        unoptimized={false}
+                      />
+                    ))
                 )}
               </div>
             </div>

@@ -4,6 +4,7 @@ const imageHostName1 = process.env.NEXT_PUBLIC_IMAGE_HOSTNAME1 as string;
 const imageHostName2 = process.env.NEXT_PUBLIC_IMAGE_HOSTNAME2 as string;
 const nextConfig: NextConfig = {
   images: {
+    qualities: [25, 50, 75, 100],
     remotePatterns: [
       {
         protocol: "https",

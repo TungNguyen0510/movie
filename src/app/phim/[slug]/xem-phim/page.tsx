@@ -40,6 +40,31 @@ export default function MovieWatchPage() {
     return current?.link_embed ?? "";
   }, [movieInfoItem?.episodes, selectedServerIndex, selectedEpisodeIndex]);
 
+  useEffect(() => {
+    if (currentEmbedUrl && movieInfoItem && typeof window !== "undefined") {
+      const currentServer = movieInfoItem.episodes?.[selectedServerIndex];
+      const currentEpisode = currentServer?.server_data?.[selectedEpisodeIndex];
+
+      if (currentServer && currentEpisode) {
+        const videoInfo = {
+          url: currentEmbedUrl,
+          title: movieInfoItem.name || "Không rõ",
+          movieSlug: movieInfoItem.slug || slug,
+          serverName: currentServer.server_name || "Không rõ",
+          episodeName: currentEpisode.name || "Không rõ",
+        };
+
+        sessionStorage.setItem("currentMovieInfo", JSON.stringify(videoInfo));
+      }
+    }
+  }, [
+    currentEmbedUrl,
+    movieInfoItem,
+    selectedServerIndex,
+    selectedEpisodeIndex,
+    slug,
+  ]);
+
   return (
     <div className="flex flex-col gap-4 w-full px-8 pb-6 mt-16">
       {isLoadingMovieInfo ? (

@@ -16,7 +16,7 @@ export default function MovieCard(movie: Movie) {
         router.push(`/phim/${movie.slug}`);
       }}
     >
-      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-md">
         {isImageLoading && <Skeleton className="absolute inset-0" />}
         <Image
           src={`https://${process.env.NEXT_PUBLIC_IMAGE_HOSTNAME1}/uploads/movies/${movie.thumb_url}`}
@@ -24,7 +24,7 @@ export default function MovieCard(movie: Movie) {
           fill
           priority
           onLoad={() => setIsImageLoading(false)}
-          className={`object-cover transition-transform group-hover:scale-110 ${
+          className={`transition-transform group-hover:scale-110 ${
             isImageLoading ? "opacity-0" : "opacity-100"
           }`}
           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 12vw"
@@ -42,16 +42,16 @@ export default function MovieCard(movie: Movie) {
               style={{
                 backgroundColor: getEpisodeColor(movie.episode_current),
               }}
-              className="p-0.5 rounded text-[0.6rem]"
+              className="p-0.5 px-1 rounded text-[0.6rem]"
             >
               {movie.episode_current}
             </Label>
             {movie.sub_docquyen ? (
-              <Label className="p-0.5 bg-amber-400 rounded text-[0.6rem]">
+              <Label className="p-0.5  px-1 bg-amber-400 rounded text-[0.6rem]">
                 VietSub Độc Quyền
               </Label>
             ) : (
-              <Label className="p-0.5 bg-sky-300 rounded text-[0.6rem]">
+              <Label className="p-0.5  px-1 bg-sky-300 rounded text-[0.6rem]">
                 {movie.lang}
               </Label>
             )}

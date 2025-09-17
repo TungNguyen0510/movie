@@ -61,7 +61,7 @@ export default function HeroSection() {
                     fill
                     priority
                     quality={100}
-                    className="object-cover"
+                    className="object-cover w-auto h-auto"
                     sizes="100vw"
                     unoptimized={false}
                   />

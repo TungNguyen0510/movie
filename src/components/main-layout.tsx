@@ -1,6 +1,7 @@
 import Header from "./header";
 import Footer from "./footer";
 import BackToTopButton from "./back-to-top-btn";
+import MoviePopup from "./movie-popup";
 
 export default function MainLayout({
   children,
@@ -13,6 +14,7 @@ export default function MainLayout({
       <main className="flex-1 w-full">{children}</main>
       <Footer />
       <BackToTopButton />
+      <MoviePopup />
     </div>
   );
 }
